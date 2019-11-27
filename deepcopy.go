@@ -90,7 +90,7 @@ func copyRecursive(original, cpy reflect.Value) {
 			// The Type's StructField for a given field is checked to see if StructField.PkgPath
 			// is set to determine if the field is exported or not because CanSet() returns false
 			// for settable fields.  I'm not sure why.  -mohae
-			if original.Type().Field(i).PkgPath != "" {
+			if original.Type().Field(i).PkgPath != "" || original.Type().Field(i).Tag.Get("dcIgnore") != "" {
 				continue
 			}
 			copyRecursive(original.Field(i), cpy.Field(i))
